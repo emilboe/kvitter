@@ -3,7 +3,7 @@ import { PostCard } from "./PostCard";
 import type { Post } from "~/firebase/posts";
 import { subscribeToPosts } from "~/firebase/posts";
 
-// Firestore realtime listener — onSnapshot pushes new/updated/deleted posts instantly
+// onSnapshot listener. Updates when posts change.
 export function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);

@@ -3,7 +3,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /posts/{postId} {
-      // Public feed — anyone can read posts without signing in
+      // Public feed. Anyone can read without signing in.
       allow read: if true;
 
       // Only authenticated users can create posts; userId must match their Auth UID

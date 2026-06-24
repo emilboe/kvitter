@@ -1,6 +1,6 @@
 import type { Config } from "@react-router/dev/config";
 
 export default {
-  // SPA mode — static build for Firebase Hosting (no Node server in production)
+  // SPA mode. Static build for Firebase Hosting.
   ssr: false,
 } satisfies Config;

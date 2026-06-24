@@ -4,7 +4,7 @@ service firebase.storage {
   match /b/{bucket}/o {
     // Images are stored at posts/{userId}/{filename}
     match /posts/{userId}/{fileName} {
-      // Public read — matches the public Firestore feed
+      // Public read. Matches the public Firestore feed.
       allow read: if true;
 
       // Only the authenticated owner can upload to their folder

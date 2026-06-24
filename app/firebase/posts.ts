@@ -49,8 +49,7 @@ function getPostsCollection() {
   return collection(getFirestoreDb(), "posts");
 }
 
-// onSnapshot sets up a realtime listener — the callback fires whenever any client
-// adds, edits, or deletes a post. This is what makes the feed update live.
+// Realtime listener. Fires when any client adds, edits, or deletes a post.
 export function subscribeToPosts(
   callback: (posts: Post[]) => void,
   onError?: (error: Error) => void,
@@ -87,7 +86,7 @@ export async function createPost(
     ...(user.photoURL ? { userPhotoURL: user.photoURL } : {}),
     title: title.trim(),
     ...(imageUrl ? { imageUrl } : {}),
-    // serverTimestamp() uses Firestore's server clock — avoids client clock skew
+    // serverTimestamp() uses the Firestore server clock
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   };
@@ -127,7 +126,7 @@ async function getPostUserId(postId: string): Promise<string | null> {
   return snap.exists() ? (snap.data().userId as string) : null;
 }
 
-// Uploads to posts/{userId}/{timestamp}-{filename} — path matches storage.rules
+// Path: posts/{userId}/{timestamp}-{filename}. Must match storage.rules.
 async function uploadImage(userId: string, file: File): Promise<string> {
   const storage = getFirebaseStorage();
   if (!storage) {

@@ -3,7 +3,7 @@ import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import { getStorage, type FirebaseStorage } from "firebase/storage";
 
-// Firebase web app config — copy these values from Firebase Console → Project settings → Your apps
+// Firebase web app config. Copy from Firebase Console → Project settings → Your apps
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -13,11 +13,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Cloud Storage is optional — set VITE_ENABLE_STORAGE=false in .env to skip image uploads entirely
+// Optional. Set VITE_ENABLE_STORAGE=false in .env to skip image uploads.
 export const storageEnabled =
   import.meta.env.VITE_ENABLE_STORAGE !== "false";
 
-// Firebase SDK is browser-only — defer initialization so SSR/prerender doesn't crash
+// Browser-only. Deferred init avoids SSR/prerender crashes.
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 let db: Firestore | undefined;

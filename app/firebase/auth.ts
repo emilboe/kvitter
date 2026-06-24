@@ -20,7 +20,7 @@ export async function signOut() {
 }
 
 // onAuthStateChanged fires whenever the user signs in, signs out, or the session refreshes.
-// Returns an unsubscribe function — call it in useEffect cleanup to avoid memory leaks.
+// Returns an unsubscribe function. Call it in useEffect cleanup.
 export function subscribeToAuth(callback: (user: User | null) => void) {
   return onAuthStateChanged(getFirebaseAuth(), callback);
 }

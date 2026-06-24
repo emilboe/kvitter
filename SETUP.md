@@ -7,7 +7,7 @@ Assumes the repo is cloned, dependencies are installed, and `.env` exists (copie
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
 2. Click **Add project** and follow the prompts.
 3. Google Analytics is optional.
-4. Skip **Set up Hosting** if it appears in the wizard. Hosting gets configured when you run `firebase deploy` (step 8).
+4. Skip **Set up Hosting** if it appears in the wizard. Hosting gets configured when you run `firebase deploy` (step 9).
 
 ## 2. Register a web app
 
@@ -31,7 +31,7 @@ VITE_FIREBASE_APP_ID=1:123456789:web:abc123
 VITE_ENABLE_STORAGE=true
 ```
 
-Set `VITE_ENABLE_STORAGE=false` to skip Cloud Storage. You can skip step 6.
+Set `VITE_ENABLE_STORAGE=false` to skip Cloud Storage. You can skip step 7.
 
 ## 4. Enable Google Authentication
 
@@ -39,7 +39,7 @@ Set `VITE_ENABLE_STORAGE=false` to skip Cloud Storage. You can skip step 6.
 2. Click **Get started**.
 3. On the **Sign-in method** tab, enable **Google**.
 4. Set a support email and save.
-5. After deploying (step 8), add your Firebase Hosting domain (e.g. `your-project.web.app`) under **Settings → Authorized domains**.
+5. After deploying (step 9), add your Firebase Hosting domain (e.g. `your-project.web.app`) under **Settings → Authorized domains**.
 
 ## 5. Create Firestore database
 
@@ -48,12 +48,27 @@ Set `VITE_ENABLE_STORAGE=false` to skip Cloud Storage. You can skip step 6.
 3. Choose **Production mode** (we deploy our own rules).
 4. Pick a region close to your users.
 
-Deploy the security rules from this repo:
+## 6. Configure `.firebaserc`
+
+The Firebase CLI needs to know which project to deploy to.
 
 ```bash
 cp .firebaserc.example .firebaserc
-# Edit .firebaserc and replace "your-firebase-project-id" with your project ID
+```
 
+Open `.firebaserc` and replace `your-firebase-project-id` with your project ID (same as `VITE_FIREBASE_PROJECT_ID` in `.env`):
+
+```json
+{
+  "projects": {
+    "default": "your-actual-project-id"
+  }
+}
+```
+
+Log in and deploy Firestore rules:
+
+```bash
 firebase login
 firebase deploy --only firestore:rules
 ```
@@ -64,7 +79,7 @@ firebase deploy --only firestore:rules
 - Signed-in users can create posts (`userId` must match their UID)
 - Only the post owner can edit or delete
 
-## 6. Enable Cloud Storage (optional)
+## 7. Enable Cloud Storage (optional)
 
 Skip if `VITE_ENABLE_STORAGE=false`.
 
@@ -78,7 +93,7 @@ firebase deploy --only storage
 
 [`storage.rules`](./storage.rules): public reads, uploads restricted to `posts/{userId}/...`.
 
-## 7. Run locally
+## 8. Run locally
 
 ```bash
 npm run dev
@@ -88,7 +103,7 @@ Open [http://localhost:5173](http://localhost:5173). Sign in with Google to crea
 
 Open another tab or an incognito window to confirm new posts show up without a refresh.
 
-## 8. Deploy to Firebase Hosting
+## 9. Deploy to Firebase Hosting
 
 ```bash
 npm run deploy
@@ -116,6 +131,7 @@ app/firebase/
 firestore.rules
 storage.rules     optional
 firebase.json
+.firebaserc         never commit
 .env              never commit
 ```
 
